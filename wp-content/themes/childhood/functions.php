@@ -13,6 +13,7 @@ function childhood_styles() {
 
 add_theme_support( 'custom-logo' );
 add_theme_support( 'post-thumbnails' );
+add_theme_support( 'menus' );
 
 
 // Подключаем карты
@@ -24,5 +25,16 @@ function my_acf_google_map_api( $api ){
 	
 }
 
-add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
+add_filter('nav_menu_link_attributes', 'filter_nav_menu_link_attributes', 10, 3);
+function filter_nav_menu_link_attributes($atts, $item, $args) {
+    if ($args->menu === 'Main') {
+        $atts['class'] = 'header__nav-item';
+
+        if ($item->current) {
+            $atts['class'] .= ' header__nav-item-active';
+        }
+    };
+
+    return $atts;
+}
 ?>
